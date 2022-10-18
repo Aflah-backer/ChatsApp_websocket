@@ -23,7 +23,7 @@ import UserListItem from "../UserAvatar/UserListItem";
 
 import axios from "axios";
 
-const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
+const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessage }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
   const [search, setSearch] = useState();
@@ -117,9 +117,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain }) => {
         config
       );
 
-      user1._id === user._id ? setSelectedChat() : setSelectedChat(data)
-      setFetchAgain(!fetchAgain)
-      setLoading(false)
+      user1._id === user._id ? setSelectedChat() : setSelectedChat(data);
+      setFetchAgain(!fetchAgain);
+      fetchMessage();
+      setLoading(false);
     } catch (err) {
       toast({
         title: "Error Occured!",

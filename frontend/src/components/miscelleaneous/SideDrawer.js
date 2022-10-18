@@ -19,7 +19,7 @@ import {
 import { useDisclosure } from "@chakra-ui/hooks";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import ProfileModel from "./ProfileModel";
 import { useHistory } from "react-router-dom";
@@ -67,6 +67,10 @@ function SideDrawer() {
 
       setLoading(false);
       setSearchResult(data);
+
+      // useEffect(() => {
+
+      // })
     } catch (err) {
       toast({
         title: "Error Occured!",

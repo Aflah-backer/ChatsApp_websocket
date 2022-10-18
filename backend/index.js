@@ -3,10 +3,11 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./confiq/db");
 const colors = require("colors");
-const messageRoutes = require("./routes/messageRoutes")
+const messageRoutes = require("./routes/messageRoutes");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const { Socket } = require("socket.io");
 
 dotenv.config();
 const app = express();
@@ -28,4 +29,28 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 6868;
 
-app.listen(6868, console.log(`server started on ${PORT}`.yellow.bold));
+const server = app.listen(
+  6868,
+  console.log(`server started on ${PORT}`.yellow.bold)
+);
+
+const io = require("socket.io")(server, {
+  pingTimeout: 6000,
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.on("connection", (Socket) => {
+  console.log("connected to socket.io");
+
+  Socket.on("setup", (userData) => {
+    Socket.join(userData._id);
+    Socket.emit("connected");
+  });
+
+  Socket.on("join chat", (room) => {
+    Socket.join(room);
+    console.log("User Joined Room: " + room);
+  });
+});
