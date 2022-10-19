@@ -5,7 +5,6 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Toast,
   VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -39,16 +38,7 @@ function Login() {
     }
 
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        "/api/user/login",
-        { email, password },
-        // config
-      );
+      const { data } = await axios.post("/api/user/login", { email, password });
       toast({
         title: "Login Successful",
         status: "success",
