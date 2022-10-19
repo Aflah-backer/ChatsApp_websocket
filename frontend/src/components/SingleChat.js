@@ -20,7 +20,7 @@ import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
 
 import io from "socket.io-client";
-const ENDPOINT = "http://localhost:6868";
+const ENDPOINT = "https://mern-realtimechatsapp.herokuapp.com/";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -91,7 +91,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
-  console.log(notification, "--------------");
 
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
